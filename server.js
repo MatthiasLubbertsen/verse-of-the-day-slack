@@ -5,11 +5,6 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
-const app = new App({
-  token: process.env.SLACK_BOT_TOKEN,
-  signingSecret: process.env.SLACK_SIGNING_SECRET
-});
-
 // Luister naar het event dat we net hebben ingesteld
 app.event('app_home_opened', async ({ event, client, logger }) => {
   try {
