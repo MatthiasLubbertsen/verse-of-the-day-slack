@@ -1,0 +1,17 @@
+{
+  "name": "verse-of-the-day-slack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@slack/bolt": "^4.7.3",
+    "node-cron": "^4.2.1"
+  }
+}
