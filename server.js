@@ -71,6 +71,11 @@ app.event('app_home_opened', async ({ event, client, logger }) => {
     }
 });
 
+app.action('actionId-0', async ({ body, ack, say }) => {
+    await ack();
+    await say(`You submitted the translation: ${body.view.state.values['plain_text_input-action'].value}`);
+});
+
 (async () => {
     await app.start(process.env.PORT || 3000);
     console.log('⚡️ Bolt app staat aan!');
