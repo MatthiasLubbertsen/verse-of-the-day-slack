@@ -43,6 +43,18 @@ function saveTranslation(slackUserId, translation) {
 function buildHomeView(translation = '', message = '') {
     const blocks = [];
 
+    if (translation) {
+        blocks.push({
+            type: 'section',
+            text: {
+                type: 'mrkdwn',
+                text: `*Current saved translation:* ${translation}`
+            }
+        });
+
+        blocks.push({ type: 'divider' });
+    }
+
     if (message) {
         blocks.push({
             type: 'section',
@@ -121,7 +133,7 @@ app.event('app_home_opened', async ({ event, client, logger }) => {
 
         await client.views.publish({
             user_id: event.user,
-            view: buildHomeView(translation)
+            view: buildHomeView(translation, translation ? '' : '*No translation saved yet.*')
         });
     } catch (error) {
         logger.error(error);
