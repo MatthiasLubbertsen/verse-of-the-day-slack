@@ -29,6 +29,7 @@ app.event('app_home_opened', async ({ event, client, logger }) => {
                     },
                     {
                         "type": "input",
+                        "block_id": "translation_input",
                         "element": {
                             "type": "plain_text_input",
                             "action_id": "plain_text_input-action"
@@ -73,7 +74,8 @@ app.event('app_home_opened', async ({ event, client, logger }) => {
 
 app.action('actionId-0', async ({ body, ack, say }) => {
     await ack();
-    await say(`You submitted the translation: ${body.view.state.values['plain_text_input-action'].value}`);
+    const translation = body.view.state.values.translation_input['plain_text_input-action'].value;
+    await say(`You submitted the translation: ${translation}`);
 });
 
 (async () => {
