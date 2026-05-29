@@ -72,10 +72,76 @@ app.event('app_home_opened', async ({ event, client, logger }) => {
     }
 });
 
-app.action('actionId-0', async ({ body, ack, say }) => {
+app.action('actionId-0', async ({ body, ack, client }) => {
     await ack();
     const translation = body.view.state.values.translation_input['plain_text_input-action'].value;
-    await say(`You submitted the translation: ${translation}`);
+    await client.views.publish({
+        user_id: body.user.id,
+        view: {
+            type: 'home',
+            blocks: [
+                {
+                    type: 'section',
+                    text: {
+                        type: 'mrkdwn',
+                        text: `*You submitted the translation:* ${translation}`
+                    }
+                },
+                {
+                    type: 'divider'
+                },
+                {
+                    type: 'header',
+                    text: {
+                        type: 'plain_text',
+                        text: ':book: Verse Of The Day',
+                        emoji: true
+                    },
+                    level: 1
+                },
+                {
+                    type: 'divider'
+                },
+                {
+                    type: 'input',
+                    block_id: 'translation_input',
+                    element: {
+                        type: 'plain_text_input',
+                        action_id: 'plain_text_input-action'
+                    },
+                    label: {
+                        type: 'plain_text',
+                        text: '<https://bible.com|Bible.com> translation to use'
+                    },
+                    optional: false
+                },
+                {
+                    type: 'context',
+                    elements: [
+                        {
+                            type: 'mrkdwn',
+                            text: 'Find your translation at <bible.com|https://bible.com> in the url!'
+                        }
+                    ]
+                },
+                {
+                    type: 'actions',
+                    elements: [
+                        {
+                            type: 'button',
+                            text: {
+                                type: 'plain_text',
+                                text: 'Submit!',
+                                emoji: true
+                            },
+                            value: 'submit-verse',
+                            action_id: 'actionId-0'
+                        }
+                    ]
+                }
+            ]
+        }
+    });
 });
 
 (async () => {
